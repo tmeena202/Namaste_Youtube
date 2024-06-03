@@ -1,7 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
+import { useEffect, useState } from "react";
+import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Head = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    // Api call
+    const timer = setTimeout(() => getSearchSuggestions(), 2000);
+
+    return () => {
+      console.log("Clean up function");
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
+
+  const getSearchSuggestions = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const json = await data.json();
+
+    console.log(json[1]);
+  };
+
   const dispatch = useDispatch();
 
   const toogleMenuHandler = () => {
@@ -33,6 +55,8 @@ const Head = () => {
           className="p-2 border border-gray-400 w-1/2 rounded-l-full"
           type="text"
           placeholder="search anything ..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <button className="p-2 bg-gray-200 border border-gray-400 rounded-r-full">
           Search
