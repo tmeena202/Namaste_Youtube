@@ -1,30 +1,47 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import { cacheResults } from "../utils/searchSlice";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const searchCache = useSelector((store) => store.search);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Api call
-    const timer = setTimeout(() => getSearchSuggestions(), 2000);
+    const timer = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        setSuggestions(searchCache[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
+    }, 200);
 
     return () => {
-      console.log("Clean up function");
+      // console.log("Clean up function");
       clearTimeout(timer);
     };
   }, [searchQuery]);
 
   const getSearchSuggestions = async () => {
+    // console.log("API call for : " + searchQuery);
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
 
-    console.log(json[1]);
-  };
+    // console.log(json[1]);
+    setSuggestions(json[1]);
 
-  const dispatch = useDispatch();
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
+  };
 
   const toogleMenuHandler = () => {
     dispatch(toggleMenu());
@@ -49,18 +66,33 @@ const Head = () => {
         </a>
       </div>
 
-      <div className="col-span-10 text-center">
+      <div className="col-span-10 px-10">
         {/* Searc Bar here */}
-        <input
-          className="p-2 border border-gray-400 w-1/2 rounded-l-full"
-          type="text"
-          placeholder="search anything ..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button className="p-2 bg-gray-200 border border-gray-400 rounded-r-full">
-          Search
-        </button>
+        <div>
+          <input
+            className="p-2 border border-gray-400 w-1/2 rounded-l-full"
+            type="text"
+            placeholder="search anything ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={(e) => setShowSuggestions(true)}
+            onBlur={(e) => setShowSuggestions(false)}
+          />
+          <button className="p-2 bg-gray-200 border border-gray-400 rounded-r-full">
+            Search
+          </button>
+        </div>
+        {showSuggestions && (
+          <div className="absolute bg-white m-1 py-2 w-[390px] shadow-2xl rounded-lg">
+            <ul>
+              {suggestions.map((s) => (
+                <li key={s} className="py-2 shadow-sm hover:bg-gray-200">
+                  🔍 {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="col-span-1">
