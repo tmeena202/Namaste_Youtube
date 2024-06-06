@@ -47,6 +47,14 @@ const Head = () => {
     dispatch(toggleMenu());
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    if (searchQuery.trim() !== "") {
+      // Navigate to the result page with the search query
+      window.location.href = `/result/${encodeURIComponent(searchQuery)}`;
+    }
+  };
+
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
       <div className="flex col-span-1">
@@ -69,18 +77,23 @@ const Head = () => {
       <div className="col-span-10 px-10">
         {/* Searc Bar here */}
         <div>
-          <input
-            className="p-2 border border-gray-400 w-1/2 rounded-l-full"
-            type="text"
-            placeholder="search anything ..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={(e) => setShowSuggestions(true)}
-            onBlur={(e) => setShowSuggestions(false)}
-          />
-          <button className="p-2 bg-gray-200 border border-gray-400 rounded-r-full">
-            Search
-          </button>
+          <form onSubmit={handleSearch}>
+            <input
+              className="p-2 border border-gray-400 w-1/2 rounded-l-full"
+              type="text"
+              placeholder="search anything ..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={(e) => setShowSuggestions(true)}
+              onBlur={(e) => setShowSuggestions(false)}
+            />
+            <button
+              type="submit"
+              className="p-2 bg-gray-200 border border-gray-400 rounded-r-full"
+            >
+              Search
+            </button>
+          </form>
         </div>
         {showSuggestions && (
           <div className="absolute bg-white m-1 py-2 w-[390px] shadow-2xl rounded-lg">

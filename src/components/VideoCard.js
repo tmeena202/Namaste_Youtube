@@ -8,7 +8,7 @@ function VideoCard({ info }) {
   const { channelTitle, title, thumbnails } = snippet;
 
   return (
-    <div className="m-2 p-2 w-[260px] shadow-lg rounded-2xl">
+    <div className="m-2 p-2 w-[255px] hover:bg-slate-300 shadow-2xl rounded-lg">
       <img
         className="rounded-2xl"
         alt="thumbnails"
@@ -27,7 +27,7 @@ function VideoCard({ info }) {
 // Comp that takes another component and return component.
 export const AdVideoCard = ({ info }) => {
   return (
-    <div className="p-1 m-1 border-2 bg-red-300 border-red-900 rounded-2xl">
+    <div className="m-1 p-1 border-2 bg-red-300 border-red-900 rounded-xl">
       <h4>Ad with higher order fnc</h4>
       <VideoCard info={info} />
     </div>
