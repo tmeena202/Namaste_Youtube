@@ -113,7 +113,7 @@ const Head = () => {
         <img
           className="h-8"
           alt="User-Logo"
-          src="https://www.nicepng.com/png/detail/136-1366211_group-of-10-guys-login-user-icon-png.png"
+          src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
         />
       </div>
     </div>
