@@ -8,8 +8,10 @@ const chatSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      state.message.splice(LIVE_CHAT_COUNT, 1);
-      state.message.unshift(action.payload);
+      if (state.message.length > LIVE_CHAT_COUNT) {
+        state.message.shift();
+      }
+      state.message.push(action.payload);
     },
   },
 });

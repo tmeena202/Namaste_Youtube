@@ -2,7 +2,7 @@ import React from "react";
 
 function ChatMessage({ name, message }) {
   return (
-    <div className="flex  items-center my-2 p-2 bg-white hover:bg-slate-300 rounded-lg shadow-2xl">
+    <div className="flex items-center my-2 p-2 bg-white hover:bg-slate-300 rounded-lg shadow-2xl">
       <img
         className="h-6"
         alt="User-Logo"

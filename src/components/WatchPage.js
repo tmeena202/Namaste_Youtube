@@ -15,12 +15,12 @@ function WatchPage() {
     dispatch(closeMenu());
   }, [dispatch]);
   return (
-    <div className="w-full">
-      <div className="ml-10 mt-5 flex">
+    <div className="">
+      <div className="ml-10 mt-5 flex ">
         <div>
           <iframe
             width="800"
-            height="400"
+            height="450"
             src={"https://www.youtube.com/embed/" + searchParams.get("v")}
             title="YouTube video player"
             frameBorder="0"
@@ -30,7 +30,7 @@ function WatchPage() {
           ></iframe>
         </div>
 
-        <div className="h-[400px] w-full ml-1 mr-2 p-2 border border-black rounded-lg bg-slate-100 flex flex-col-reverse overflow-y-scroll">
+        <div className="ml-2">
           <LiveChat />
         </div>
       </div>

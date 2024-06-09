@@ -181,6 +181,7 @@ export function generateRandomName() {
 
 export function makeRandomMessage(length) {
   let result = "";
+  const emoji = ["😊", "😂", "🤣", "😍", "😒", "😁", "😎", "🥲", "😗", "🤗"];
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
@@ -189,5 +190,6 @@ export function makeRandomMessage(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
     counter += 1;
   }
+  result += emoji[Math.floor(Math.random() * emoji.length)];
   return result;
 }
