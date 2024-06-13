@@ -13,9 +13,9 @@ const SideBar = () => {
         <li className="hover:bg-gray-200 p-2 rounded">
           <Link to="/">Home</Link>
         </li>
-        <li className="hover:bg-gray-200 p-2 rounded">Shorts</li>
-        <li className="hover:bg-gray-200 p-2 rounded">Trending</li>
-        <li className="hover:bg-gray-200 p-2 rounded">Live</li>
+        <li className="hover:bg-gray-200 p-2 rounded">
+          <Link to="/shorts">Shorts</Link>
+        </li>
       </ul>
       <h1 className="font-bold pt-5 border-t mt-5">Subscriptions</h1>
       <ul className="space-y-2 mt-2">

@@ -11,6 +11,8 @@ import WatchPage from "./components/WatchPage";
 import ResultPage from "./components/ResultPage.js/ResultPage";
 import Demo from "./components/Demo";
 import Demo2 from "./components/Demo2";
+import ShortsContainer from "./components/Shorts/ShortsContainer";
+import ShortsWatchPage from "./components/Shorts/ShortsWatchPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const appRouter = createBrowserRouter([
       {
         path: "result/:searchResult",
         element: <ResultPage />,
+      },
+      {
+        path: "shorts",
+        element: <ShortsContainer />,
+      },
+      {
+        path: "shorts/:shortsId",
+        element: <ShortsWatchPage />,
       },
       {
         path: "demo",
