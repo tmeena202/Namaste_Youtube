@@ -8,3 +8,6 @@ export const YOUTUBE_SEARCH_API =
   "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
 
 export const LIVE_CHAT_COUNT = 18;
+
+export const DEFAULT_PROFILE_IMAGE_URL =
+  "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png";

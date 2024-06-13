@@ -15,7 +15,7 @@ function LiveChat() {
   useEffect(() => {
     const i = setInterval(() => {
       // API Polling
-      console.log("API Polling");
+      // console.log("API Polling");
 
       dispatch(
         addMessage({

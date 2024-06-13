@@ -30,7 +30,7 @@ function WatchPage() {
           ></iframe>
         </div>
 
-        <div className="ml-2">
+        <div className="">
           <LiveChat />
         </div>
       </div>

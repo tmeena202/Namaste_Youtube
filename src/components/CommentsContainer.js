@@ -1,5 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { GOOGLE_API_KEY } from "../utils/constants";
+import { useSearchParams } from "react-router-dom";
+import { DEFAULT_PROFILE_IMAGE_URL } from "../utils/constants";
 
 const commentsData = [
   {
@@ -107,43 +111,97 @@ const commentsData = [
 ];
 
 const Comment = ({ data }) => {
-  const { name, text, like, replies } = data;
+  const { authorDisplayName, textDisplay, authorProfileImageUrl, likeCount } =
+    data.snippet.topLevelComment.snippet;
   return (
     <div className="flex items-start mb-3 shadow-lg rounded-lg p-2 bg-gray-300">
       <img
         className="w-10 h-10 rounded-full"
         alt="user"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQdztTDcpZ2pFqwWDYwSXbvZq5nzJYg5cn8w&s"
+        src={authorProfileImageUrl || DEFAULT_PROFILE_IMAGE_URL}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = DEFAULT_PROFILE_IMAGE_URL;
+        }}
       ></img>
       <div className="ml-3">
-        <p className="font-bold text-sm text-gray-900">@{name}</p>
-        <p className="text-sm text-gray-700 mt-1">{text}</p>
-        <p className="text-sm text-gray-600 mt-1">👍 {like}</p>
+        <p className="font-bold text-sm text-gray-900">{authorDisplayName}</p>
+        <p className="text-md text-gray-700 mt-1">{textDisplay}</p>
+        <p className="text-sm text-gray-600 mt-1">👍 {likeCount}</p>
       </div>
     </div>
   );
 };
 
-const CommentsList = ({ comments }) => {
+const Reply = ({ data }) => {
+  const { authorDisplayName, textDisplay, authorProfileImageUrl, likeCount } =
+    data.replies?.comments || {};
+  return (
+    <div className="flex items-start mb-3 shadow-lg rounded-lg p-2 bg-gray-300">
+      <img
+        className="w-10 h-10 rounded-full"
+        alt="user"
+        src={authorProfileImageUrl || DEFAULT_PROFILE_IMAGE_URL}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = DEFAULT_PROFILE_IMAGE_URL;
+        }}
+      ></img>
+      <div className="ml-3">
+        <p className="font-bold text-sm text-gray-900">{authorDisplayName}</p>
+        <p className="text-md text-gray-700 mt-1">{textDisplay}</p>
+        <p className="text-sm text-gray-600 mt-1">👍 {likeCount}</p>
+      </div>
+    </div>
+  );
+};
+
+//
+const CommentsList = ({ commentsArray }) => {
+  console.log(commentsArray);
   return (
     <>
-      {comments.map((comment, index) => (
+      {commentsArray.map((comment, index) => (
         <div key={index}>
           <Comment data={comment} />
-          <div className="pl-5 border border-l-black ml-5">
-            <CommentsList comments={comment.replies} />
-          </div>
+          {/* <div className="pl-5 border border-l-black ml-5">
+            <Reply data={comment} />
+          </div> */}
         </div>
       ))}
     </>
   );
 };
 
+// Main Comment Component
 const CommentsContainer = () => {
+  const [commentsArray, setCommentsArray] = useState([]);
+  const [searchParams] = useSearchParams();
+  const videoId = searchParams.get("v");
+
+  console.log("Rendering");
+  // console.log(comments);
+
+  useEffect(() => {
+    getComments();
+  }, []);
+
+  const getComments = async () => {
+    const data = await fetch(
+      `https://www.googleapis.com/youtube/v3/commentThreads?key=${GOOGLE_API_KEY}&textFormat=plainText&part=snippet,replies&videoId=${videoId}&maxResults=100`
+    );
+    const json = await data.json();
+    // console.log(json);
+    setCommentsArray(json.items);
+  };
   return (
     <div className="m-5 p-2 w-[800px]">
       <h1 className="text-2xl font-bold">Comments :</h1>
-      <CommentsList comments={commentsData} />
+      {commentsArray.length > 0 ? (
+        <CommentsList commentsArray={commentsArray} />
+      ) : (
+        <p>Loading</p>
+      )}
     </div>
   );
 };

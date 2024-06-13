@@ -8,7 +8,7 @@ function VideoCard({ info }) {
   const { channelTitle, title, thumbnails } = snippet;
 
   return (
-    <div className="m-2 p-2 w-[255px] hover:bg-slate-300 shadow-2xl rounded-lg">
+    <div className="m-2 p-2 w-[230px] hover:bg-slate-300 shadow-2xl rounded-lg">
       <img
         className="rounded-2xl"
         alt="thumbnails"
