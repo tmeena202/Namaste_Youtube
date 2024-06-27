@@ -27,7 +27,7 @@ function VideoCard({ info }) {
 // Comp that takes another component and return component.
 export const AdVideoCard = ({ info }) => {
   return (
-    <div className="m-1 p-1 border-2 bg-red-300 border-red-900 rounded-xl">
+    <div className="m-1 p-1 border-2 bg-red-300 border-red-900 rounded-xl ">
       <h4>Ad with higher order fnc</h4>
       <VideoCard info={info} />
     </div>

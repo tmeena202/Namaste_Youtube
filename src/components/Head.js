@@ -79,7 +79,7 @@ const Head = () => {
         <div>
           <form onSubmit={handleSearch}>
             <input
-              className="p-2 border border-gray-400 w-1/2 rounded-l-full"
+              className="p-2 border bg-slate-200 border-gray-400 w-1/2 rounded-l-full"
               type="text"
               placeholder="search anything ..."
               value={searchQuery}
